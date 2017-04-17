@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">SimpleResume</string>
+
+    <string name="edit_basic_info">Edit basic info</string>
+
+    <string name="section_education">Education</string>
+    <string name="add_education">Add education</string>
+    <string name="edit_education">Edit education</string>
+
+    <string name="user_picture">User picture</string>
+
+    <string name="section_experience">Experience</string>
+    <string name="add_experience">add_experience</string>
+    <string name="edit_experience">edit_experience</string>
+
+    <string name="add_project">add_project</string>
+    <string name="edit_project">edit_project</string>
+    <string name="section_project">Project</string>
+
+    <string name="education_school">School</string>
+    <string name="education_major">Major</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
+    <string name="education_courses">Courses</string>
+
+    <string name="save">Save</string>
+    <string name="experience_company">Company</string>
+    <string name="experience_work">What did you do</string>
+
+    <string name="basic_info_name">Your Name</string>
+    <string name="basic_info_email">Your Email</string>
+
+    <string name="project_name">Project name</string>
+    <string name="project_details">Details</string>
+    <string name="experience_title">Title</string>
+    <string name="action_delete">Delete</string>
+    <string name="basic_info_edit_choose_user_picture">Choose user picture</string>
+
+</resources>

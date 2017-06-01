@@ -3,6 +3,7 @@ package com.yangcao.simpleresume;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yangcao.simpleresume.model.BasicInfo;
 import com.yangcao.simpleresume.model.Education;
 import com.yangcao.simpleresume.model.Experience;
+import com.yangcao.simpleresume.model.NewSection;
 import com.yangcao.simpleresume.model.Project;
 import com.yangcao.simpleresume.util.DateUtils;
 import com.yangcao.simpleresume.util.ImageUtils;
@@ -32,16 +34,20 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQ_CODE_EDUCATION_EDIT = 101;
     private static final int REQ_CODE_EXPERIENCE_EDIT = 102;
     private static final int REQ_CODE_PROJECT_EDIT = 103;
+    private static final int REQ_CODE_NEW_SECTION_NAME_EDIT = 104;
 
     private static final String MODEL_BASIC_INFO = "basic_info";
     private static final String MODEL_EDUCATIONS = "educations";
     private static final String MODEL_EXPERIENCES = "experiences";
     private static final String MODEL_PROJECTS = "projects";
+    private static final String MODEL_SECTION_NAMES = "section_names";
+
 
     private BasicInfo basicInfo;
     private List<Education> educations;
     private List<Experience> experiences;
     private List<Project> projects;
+    private List<NewSection> sectionNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadData();
         setupUI();
+
     }
 
     @Override
@@ -95,11 +102,83 @@ public class MainActivity extends AppCompatActivity {
                         updateProject(project);
                     }
                     break;
+
+                case REQ_CODE_NEW_SECTION_NAME_EDIT:
+                    String sectionNameId =
+                            data.getStringExtra(NewSectionNameEditActivity.KEY_NEW_SECITON_NAME_ID);
+                    if (sectionNameId != null) {
+                        deleteSection(sectionNameId);
+                    } else {
+                        NewSection sectionName =
+                                data.getParcelableExtra(NewSectionNameEditActivity.KEY_NEW_SECTION_NAME);
+                        updateSectionName(sectionName);
+                    }
+                    break;
             }
         }
 
     }
 
+    //setup全部新的section
+    private void setupSections() {
+        LinearLayout wrapperLayout = (LinearLayout)findViewById(R.id.new_sections_wrapper);
+        wrapperLayout.removeAllViews();
+        for (NewSection sectionName : sectionNames) {
+            View sectionView = getLayoutInflater().inflate(R.layout.new_section, null);
+            setupSectionName(sectionView, sectionName);
+            wrapperLayout.addView(sectionView);
+        }
+    }
+
+    private void updateSectionName(NewSection newSectionName) {
+        boolean found = false;
+        for (int i = 0; i < sectionNames.size(); ++i) {
+            NewSection item = sectionNames.get(i);
+            if (TextUtils.equals(item.id, newSectionName.id)) {
+                sectionNames.set(i, newSectionName);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            sectionNames.add(newSectionName);
+        }
+
+        ModelUtils.saveModel(this, MODEL_SECTION_NAMES, sectionNames);
+        setupSections();
+    }
+
+    //setup一个section
+    private void setupSectionName(View sectionView, final NewSection sectionName) {
+        ((TextView)sectionView.findViewById(R.id.new_section_name)).setText(sectionName.name);
+
+        //点击名称进入名称编辑
+        (sectionView.findViewById(R.id.new_section_name))
+                .setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewSectionNameEditActivity.class);
+                intent.putExtra(NewSectionNameEditActivity.KEY_NEW_SECTION_NAME, sectionName);
+                startActivityForResult(intent, REQ_CODE_NEW_SECTION_NAME_EDIT);
+            }
+        });
+
+        //点击'+'进入条目编辑
+    }
+
+    private void deleteSection(String sectionNameId) {
+        for (int i = 0; i < sectionNames.size(); ++i) {
+            NewSection item = sectionNames.get(i);
+            if (TextUtils.equals(sectionNameId, item.id)) {
+                sectionNames.remove(i);
+                break;
+            }
+        }
+
+        ModelUtils.saveModel(this, MODEL_SECTION_NAMES, sectionNames);
+        setupSections();
+    }
 
     private void setupUI() {
         setContentView(R.layout.activity_main);
@@ -108,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         setupEducations();
         setupExperiences();
         setupProjects();
+        setupSections();
 
         //click add btn to launch education_edit_activity
         findViewById(R.id.add_education_btn).setOnClickListener(new View.OnClickListener() {
@@ -136,6 +216,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //click fab to add new sections
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,
+                        NewSectionNameEditActivity.class);
+                startActivityForResult(intent, REQ_CODE_NEW_SECTION_NAME_EDIT);
+            }
+        });
     }
 
 
@@ -370,6 +460,10 @@ public class MainActivity extends AppCompatActivity {
         List<Project> savedProjects = ModelUtils.readModel(
                 this, MODEL_PROJECTS, new TypeToken<List<Project>>(){});
         projects = savedProjects == null ? new ArrayList<Project>() : savedProjects;
+
+        List<NewSection> savedSectionNames = ModelUtils.readModel(
+                this, MODEL_SECTION_NAMES, new TypeToken<List<NewSection>>(){});
+        sectionNames = savedSectionNames == null ? new ArrayList<NewSection>() : savedSectionNames;
     }
 
 

@@ -14,19 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.google.gson.reflect.TypeToken;
 import com.yangcao.simpleresume.model.BasicInfo;
 import com.yangcao.simpleresume.model.Education;
@@ -37,9 +24,6 @@ import com.yangcao.simpleresume.util.ImageUtils;
 import com.yangcao.simpleresume.util.ModelUtils;
 
 import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 public class MainActivity extends AppCompatActivity {

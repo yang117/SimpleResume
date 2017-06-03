@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/**
- * Created by Rainie on 4/10/17.
- */
 
 public abstract class EditBaseActivity <T> extends AppCompatActivity {
 

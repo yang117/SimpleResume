@@ -24,6 +24,7 @@
         <activity android:name=".ExperienceEditActivity"/>
         <activity android:name=".ProjectEditActivity"/>
         <activity android:name=".NewSectionNameEditActivity"/>
+        <activity android:name=".NewSectionItemEditActivity"/>
 
     </application>
 

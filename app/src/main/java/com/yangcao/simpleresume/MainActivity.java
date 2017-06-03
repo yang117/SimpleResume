@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +22,7 @@ import com.yangcao.simpleresume.model.BasicInfo;
 import com.yangcao.simpleresume.model.Education;
 import com.yangcao.simpleresume.model.Experience;
 import com.yangcao.simpleresume.model.NewSection;
+import com.yangcao.simpleresume.model.NewSectionItem;
 import com.yangcao.simpleresume.model.Project;
 import com.yangcao.simpleresume.util.DateUtils;
 import com.yangcao.simpleresume.util.ImageUtils;
@@ -35,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQ_CODE_EXPERIENCE_EDIT = 102;
     private static final int REQ_CODE_PROJECT_EDIT = 103;
     private static final int REQ_CODE_NEW_SECTION_NAME_EDIT = 104;
+    private static final int REQ_CODE_NEW_SECTION_ITEM_EDIT = 105;
 
     private static final String MODEL_BASIC_INFO = "basic_info";
     private static final String MODEL_EDUCATIONS = "educations";
     private static final String MODEL_EXPERIENCES = "experiences";
     private static final String MODEL_PROJECTS = "projects";
     private static final String MODEL_SECTION_NAMES = "section_names";
+    private static final String MODEL_SECTION_ITEMS = "section_items";
 
 
     private BasicInfo basicInfo;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Experience> experiences;
     private List<Project> projects;
     private List<NewSection> sectionNames;
+    private List<NewSectionItem> sectionItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,70 +120,21 @@ public class MainActivity extends AppCompatActivity {
                         updateSectionName(sectionName);
                     }
                     break;
+
+                case REQ_CODE_NEW_SECTION_ITEM_EDIT:
+                    String sectionItemId =
+                            data.getStringExtra(NewSectionItemEditActivity.KEY_NEW_SECTION_ITEM_ID);
+                    if (sectionItemId != null) {
+                        deleteSectionItem(sectionItemId);
+                    } else {
+                        NewSectionItem sectionItem =
+                                data.getParcelableExtra(NewSectionItemEditActivity.KEY_NEW_SECTION_ITEM);
+                        updateSectionItem(sectionItem);
+                    }
+                    break;
             }
         }
 
-    }
-
-    //setup全部新的section
-    private void setupSections() {
-        LinearLayout wrapperLayout = (LinearLayout)findViewById(R.id.new_sections_wrapper);
-        wrapperLayout.removeAllViews();
-        for (NewSection sectionName : sectionNames) {
-            View sectionView = getLayoutInflater().inflate(R.layout.new_section, null);
-            setupSectionName(sectionView, sectionName);
-            wrapperLayout.addView(sectionView);
-        }
-    }
-
-    private void updateSectionName(NewSection newSectionName) {
-        boolean found = false;
-        for (int i = 0; i < sectionNames.size(); ++i) {
-            NewSection item = sectionNames.get(i);
-            if (TextUtils.equals(item.id, newSectionName.id)) {
-                sectionNames.set(i, newSectionName);
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            sectionNames.add(newSectionName);
-        }
-
-        ModelUtils.saveModel(this, MODEL_SECTION_NAMES, sectionNames);
-        setupSections();
-    }
-
-    //setup一个section
-    private void setupSectionName(View sectionView, final NewSection sectionName) {
-        ((TextView)sectionView.findViewById(R.id.new_section_name)).setText(sectionName.name);
-
-        //点击名称进入名称编辑
-        (sectionView.findViewById(R.id.new_section_name))
-                .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NewSectionNameEditActivity.class);
-                intent.putExtra(NewSectionNameEditActivity.KEY_NEW_SECTION_NAME, sectionName);
-                startActivityForResult(intent, REQ_CODE_NEW_SECTION_NAME_EDIT);
-            }
-        });
-
-        //点击'+'进入条目编辑
-    }
-
-    private void deleteSection(String sectionNameId) {
-        for (int i = 0; i < sectionNames.size(); ++i) {
-            NewSection item = sectionNames.get(i);
-            if (TextUtils.equals(sectionNameId, item.id)) {
-                sectionNames.remove(i);
-                break;
-            }
-        }
-
-        ModelUtils.saveModel(this, MODEL_SECTION_NAMES, sectionNames);
-        setupSections();
     }
 
     private void setupUI() {
@@ -442,6 +399,152 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //setup全部新的section
+    private void setupSections() {
+        LinearLayout wrapperLayout = (LinearLayout)findViewById(R.id.new_sections_wrapper);
+        wrapperLayout.removeAllViews();
+        for (NewSection sectionName : sectionNames) {
+            View sectionView = getLayoutInflater().inflate(R.layout.new_section, null);
+            setupSectionName(sectionView, sectionName);
+            setupSectionItems(sectionView, sectionName, sectionItems); //布局当前section的items
+            wrapperLayout.addView(sectionView);
+        }
+    }
+
+    private void setupSectionItems(View sectionView, NewSection sectionName, List<NewSectionItem> sectionItems) {
+        LinearLayout sectionLayout = (LinearLayout)sectionView.findViewById(R.id.new_section_items);
+        sectionLayout.removeAllViews();
+        for (NewSectionItem sectionItem : sectionItems) {
+            if (TextUtils.equals(sectionItem.sectionNameId, sectionName.id)) {
+                View sectionItemView = getLayoutInflater().inflate(R.layout.new_section_item, null);
+                setupSectionItem(sectionItemView, sectionItem);
+                sectionLayout.addView(sectionItemView);
+            }
+        }
+    }
+
+    private void updateSectionName(NewSection newSectionName) {
+        boolean found = false;
+        for (int i = 0; i < sectionNames.size(); ++i) {
+            NewSection item = sectionNames.get(i);
+            if (TextUtils.equals(item.id, newSectionName.id)) {
+                sectionNames.set(i, newSectionName);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            sectionNames.add(newSectionName);
+        }
+
+        ModelUtils.saveModel(this, MODEL_SECTION_NAMES, sectionNames);
+        setupSections();
+    }
+
+    private void setupSectionName(View sectionView, final NewSection sectionName) {
+        ((TextView)sectionView.findViewById(R.id.new_section_name)).setText(sectionName.name);
+
+        //点击名称进入名称编辑
+        (sectionView.findViewById(R.id.new_section_name))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this,
+                                NewSectionNameEditActivity.class);
+                        intent.putExtra(NewSectionNameEditActivity.KEY_NEW_SECTION_NAME, sectionName);
+                        startActivityForResult(intent, REQ_CODE_NEW_SECTION_NAME_EDIT);
+                    }
+                });
+
+        //点击'+'进入条目添加
+        ((sectionView).findViewById(R.id.add_new_section_btn))
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this,
+                                NewSectionItemEditActivity.class);
+                        //给一个初值sectionNameId
+                        intent.putExtra(NewSectionNameEditActivity.KEY_NEW_SECITON_NAME_ID, sectionName.id);
+                        startActivityForResult(intent, REQ_CODE_NEW_SECTION_ITEM_EDIT);
+                    }
+                });
+    }
+
+    private void deleteSection(String sectionNameId) {
+        // delete section name
+        for (int i = 0; i < sectionNames.size(); ++i) {
+            NewSection item = sectionNames.get(i);
+            if (TextUtils.equals(sectionNameId, item.id)) {
+                sectionNames.remove(i);
+                break;
+            }
+        }
+
+        //delete section items belong to this section要删除所有对应sectionNameId的item对象
+        for (int i = 0; i < sectionItems.size(); ++i) {
+            NewSectionItem item = sectionItems.get(i);
+            if (TextUtils.equals(sectionNameId, item.sectionNameId)) {
+                sectionItems.remove(i);
+            }
+        }
+
+        ModelUtils.saveModel(this, MODEL_SECTION_NAMES, sectionNames);
+        ModelUtils.saveModel(this, MODEL_SECTION_ITEMS, sectionItems);
+        setupSections();
+    }
+
+    private void updateSectionItem(NewSectionItem newSectionItem) {
+        boolean found = false;
+        for (int i = 0; i < sectionItems.size(); ++i) {
+            NewSectionItem item = sectionItems.get(i);
+            if (TextUtils.equals(item.id, newSectionItem.id)) {
+                sectionItems.set(i, newSectionItem);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            sectionItems.add(newSectionItem);
+        }
+
+        ModelUtils.saveModel(this, MODEL_SECTION_ITEMS, sectionItems);
+        setupSections();
+    }
+
+    private void setupSectionItem(View sectionItemView, final NewSectionItem sectionItem) {
+        String dateString = DateUtils.dateToString(sectionItem.date);
+        ((TextView)sectionItemView.findViewById(R.id.new_section_item_title))
+                .setText(sectionItem.title + " (" + dateString + ")");
+        ((TextView)sectionItemView.findViewById(R.id.new_section_item_content))
+                .setText(sectionItem.content);
+
+        // click edit btn to edit items，不需要sectionNameId的初值
+        sectionItemView.findViewById(R.id.edit_new_section_btn)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(MainActivity.this, NewSectionItemEditActivity.class);
+                        intent.putExtra(NewSectionItemEditActivity.KEY_NEW_SECTION_ITEM, sectionItem);
+                        startActivityForResult(intent, REQ_CODE_NEW_SECTION_ITEM_EDIT);
+                    }
+                });
+    }
+
+    private void deleteSectionItem(String sectionItemId) {
+        for (int i = 0; i < sectionItems.size(); ++i) {
+            NewSectionItem item = sectionItems.get(i);
+            if (TextUtils.equals(item.id, sectionItemId)) {
+                sectionItems.remove(i);
+                break;
+            }
+        }
+
+        ModelUtils.saveModel(this, MODEL_SECTION_ITEMS, sectionItems);
+        setupSections();
+    }
+
 
     //load data from disk, no fake
     private void loadData() {
@@ -464,6 +567,10 @@ public class MainActivity extends AppCompatActivity {
         List<NewSection> savedSectionNames = ModelUtils.readModel(
                 this, MODEL_SECTION_NAMES, new TypeToken<List<NewSection>>(){});
         sectionNames = savedSectionNames == null ? new ArrayList<NewSection>() : savedSectionNames;
+
+        List<NewSectionItem> saveSectionItems = ModelUtils.readModel(
+                this, MODEL_SECTION_ITEMS, new TypeToken<List<NewSectionItem>>(){});
+        sectionItems = saveSectionItems == null ? new ArrayList<NewSectionItem>() : saveSectionItems;
     }
 
 

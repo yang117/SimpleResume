@@ -36,5 +36,8 @@
     <string name="action_delete">Delete</string>
     <string name="basic_info_edit_choose_user_picture">Choose user picture</string>
     <string name="new_section_hint">NEW SECTION</string>
+    <string name="new_section_edit_title">Title</string>
+    <string name="new_section_edit_date">Date</string>
+    <string name="new_section_edit_content">Content</string>
 
 </resources>

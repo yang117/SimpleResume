@@ -13,9 +13,6 @@ import com.yangcao.simpleresume.model.Education;
 import com.yangcao.simpleresume.util.DateUtils;
 import java.util.Arrays;
 
-/**
- * Created by Rainie on 4/5/17.
- */
 
 @SuppressWarnings("ConstantConditions")
 public class EducationEditActivity extends EditBaseActivity <Education>{

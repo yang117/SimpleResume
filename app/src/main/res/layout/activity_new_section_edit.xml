@@ -3,6 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/spacing_medium">
+
+    <EditText
+        android:id="@+id/new_section_edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_section_edit_title"/>
+
+    <EditText
+        android:id="@+id/new_section_edit_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_section_edit_date"
+        android:inputType="date"/>
+
+    <EditText
+        android:id="@+id/new_section_edit_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/new_section_edit_content"/>
+
+    <TextView
+        android:id="@+id/new_section_edit_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_gravity="end"
+        android:text="@string/action_delete"
+        style="@style/AppTheme.TextView.DeleteButton"/>
 
 </LinearLayout>

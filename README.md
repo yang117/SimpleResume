@@ -4,9 +4,11 @@
 
 ### branch 1:
 
+* Basic sections of basicInfo, education, experience and project
 * Form Interface (add, edit, delete)
+* Shared Preference & JSON (data offline storage)
 * Request permissions at runtime (upload image from local gallery)
-* Shared Preference (data offline storage)
+
 
 <div align=center>
 <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI_noFab.jpeg" width="420" height="800" alt="mainUI_noFab"/> 
@@ -23,7 +25,7 @@
 * Added a Fab on main UI to create new personal sections(e.g. Awards, Publish)
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI.jpeg" width="420" height="800" alt="mainUI"/> 
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI.jpeg" width="420" height="800" alt="mainUI"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/award_publish_sectinos.jpeg" width="420" height="800" alt="award_publish_sectinos"/>
 </div>
 
 <div align=center>

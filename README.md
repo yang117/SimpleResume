@@ -9,11 +9,11 @@
 * Shared Preference (data offline storage)
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/mainUI.jpeg" width="400" height="800" alt="MainUI"/> <img src="https://github.com/yang117/SimpleTodo/raw/master/screenshot/edit_form.jpeg" width="400" height="800" alt="Edit form"/>
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI.jpeg" width="400" height="800" alt="MainUI"/> 
 </div>
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/basicInfo.jpeg" width="400" height="800" alt="basicInfo"/> <img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/education.jpeg" width="400" height="800" alt="education"/>
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/basicInfo.jpeg" width="400" height="800" alt="basicInfo"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/education.jpeg" width="400" height="800" alt="education"/>
 </div>
 
 
@@ -22,5 +22,5 @@
 * Added a Fab on main UI to create new personal sections(e.g. Awards, Publish)
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/newSection.jpeg" width="400" height="800" alt="newSection"/> <img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/newSectionItem.jpeg" width="400" height="800" alt="newSectionItem"/>
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/newSection.jpeg" width="400" height="800" alt="newSection"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/newSectionItem.jpeg" width="400" height="800" alt="newSectionItem"/>
 </div>

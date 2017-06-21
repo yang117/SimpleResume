@@ -25,7 +25,7 @@
 * Added a Fab on main UI to create new personal sections(e.g. Awards, Publish)
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI.jpeg" width="420" height="800" alt="mainUI"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/award_publish_sectinos.jpeg" width="420" height="800" alt="award_publish_sectinos"/>
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI.jpeg" width="420" height="800" alt="mainUI"/>  <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/award_publish_sections.jpeg" width="420" height="800" alt="award_publish_sectinos"/>
 </div>
 
 <div align=center>

@@ -11,12 +11,9 @@
 
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI_noFab.jpeg" width="420" height="800" alt="mainUI_noFab"/> 
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI_noFab.jpeg" width="260" height="480" alt="mainUI_noFab"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/basicInfo.jpeg" width="260" height="480" alt="basicInfo"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/education.jpeg" width="260" height="480" alt="education"/>
 </div>
 
-<div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/basicInfo.jpeg" width="420" height="800" alt="basicInfo"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/education.jpeg" width="420" height="800" alt="education"/>
-</div>
 
 
 
@@ -25,9 +22,6 @@
 * Added a Fab on main UI to create new personal sections(e.g. Awards, Publish)
 
 <div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/mainUI.jpeg" width="420" height="800" alt="mainUI"/>  <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/award_publish_sections.jpeg" width="420" height="800" alt="award_publish_sectinos"/>
+<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/award_publish_sections.jpeg" width="260" height="480" alt="award_publish_sectinos"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/newSection.jpeg" width="260" height="480" alt="newSection"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/newSectionItem.jpeg" width="260" height="480" alt="newSectionItem"/>
 </div>
 
-<div align=center>
-<img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/newSection.jpeg" width="420" height="800" alt="newSection"/> <img src="https://github.com/yang117/SimpleResume/raw/1/screenshots/newSectionItem.jpeg" width="420" height="800" alt="newSectionItem"/>
-</div>

@@ -8,8 +8,19 @@
 * Request permissions at runtime (upload image from local gallery)
 * Shared Preference (data offline storage)
 
+<div align=center>
+<img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/mainUI.jpeg" width="400" height="800" alt="MainUI"/> <img src="https://github.com/yang117/SimpleTodo/raw/master/screenshot/edit_form.jpeg" width="400" height="800" alt="Edit form"/>
+</div>
+
+<div align=center>
+<img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/basicInfo.jpeg" width="400" height="800" alt="basicInfo"/> <img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/education.jpeg" width="400" height="800" alt="education"/>
+</div>
+
 
 ### branch 2:
 
-* Added a Fab on main UI to create new personal sections
+* Added a Fab on main UI to create new personal sections(e.g. Awards, Publish)
 
+<div align=center>
+<img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/newSection.jpeg" width="400" height="800" alt="newSection"/> <img src="https://github.com/yang117/SimpleResume/raw/master/screenshots/newSectionItem.jpeg" width="400" height="800" alt="newSectionItem"/>
+</div>
